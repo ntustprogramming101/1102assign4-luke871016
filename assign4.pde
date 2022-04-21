@@ -508,9 +508,9 @@ void initialize() {
   for (int o=1; o<24; o++) {
     float randomSeed = random(0, 2);
     if (floor(randomSeed)==0) {
-      int emptyA = floor(random(0, 6));
-      int emptyB = floor(random(0, 6));
-      for (int i=0; i<6; i++) {
+      int emptyA = floor(random(0, 9));
+      int emptyB = floor(random(0, 9));
+      for (int i=0; i<8; i++) {
         if (i == emptyA) {
           soilHealth[i][o] = 0;
         }
@@ -519,8 +519,8 @@ void initialize() {
         }
       }
     } else {
-      int emptyA = floor(random(0, 6));
-      for (int i=0; i<6; i++) {
+      int emptyA = floor(random(0, 9));
+      for (int i=0; i<8; i++) {
         if (i == emptyA) {
           soilHealth[i][o] = 0;
         }
