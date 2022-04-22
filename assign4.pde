@@ -85,7 +85,6 @@ void setup() {
 }
 
 void draw() {
-
   switch (gameState) {
 
   case GAME_START: // Start Screen
@@ -116,90 +115,7 @@ void draw() {
     strokeWeight(5);
     fill(253, 184, 19);
     ellipse(590, 50, 120, 120);
-
-    // CAREFUL!
-    // Because of how this translate value is calculated, the Y value of the ground level is actually 0
-    pushMatrix();
-    translate(0, max(SOIL_SIZE * -18, SOIL_SIZE * 1 - playerY));
-
-    // Ground
-
-    fill(124, 204, 25);
-    noStroke();
-    rect(0, -GRASS_HEIGHT, width, GRASS_HEIGHT);
-
-    // Soil
-
-    for (int i = 0; i < soilHealth.length; i++) {
-      for (int j = 0; j < soilHealth[i].length; j++) {
-
-        // Change this part to show soil and stone images based on soilHealth value
-        // NOTE: To avoid errors on webpage, you can either use floor(j / 4) or (int)(j / 4) to make sure it's an integer.
-        if (soilHealth[i][j]!=0) {
-          int areaIndex = floor(j / 4);
-          int soilIndex = 4;
-          if (soilHealth[i][j]>=13) {
-            soilIndex = 4;
-          } else if (soilHealth[i][j]>=10) {
-            soilIndex = 3;
-          } else if (soilHealth[i][j]>=7) {
-            soilIndex = 2;
-          } else if (soilHealth[i][j]>=4) {
-            soilIndex = 1;
-          } else if (soilHealth[i][j]>=1) {
-            soilIndex = 0;
-          }
-          image(soils[areaIndex][soilIndex], i * SOIL_SIZE, j * SOIL_SIZE);
-
-          // Stone
-          if (soilHealth[i][j]>=43) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-            image(stones[1][4], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=40) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-            image(stones[1][3], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=37) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-            image(stones[1][2], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=34) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-            image(stones[1][1], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=31) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-            image(stones[1][0], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=28) {
-            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=25) {
-            image(stones[0][3], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=22) {
-            image(stones[0][2], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=19) {
-            image(stones[0][1], i * SOIL_SIZE, j * SOIL_SIZE);
-          } else if (soilHealth[i][j]>=16) {
-            image(stones[0][0], i * SOIL_SIZE, j * SOIL_SIZE);
-          }
-        } else {
-          image(soilEmpty, i * SOIL_SIZE, j * SOIL_SIZE);
-        }
-      }
-    }
-
-    // Cabbages
-    // > Remember to check if playerHealth is smaller than PLAYER_MAX_HEALTH!
     
-    for(int i=0;i<6;i++){
-      if(playerX < cabbageX[i]+SOIL_SIZE &&
-           playerX + SOIL_SIZE > cabbageX[i] &&
-           playerY < cabbageY[i] + SOIL_SIZE &&
-           playerY + SOIL_SIZE > cabbageY[i] &&
-           playerHealth <=4
-           ){
-          cabbageX[i] = -SOIL_SIZE;
-          playerHealth ++;
-        }
-      image(cabbage,cabbageX[i],cabbageY[i]);
-    }
-
     // Groundhog
 
     PImage groundhogDisplay = groundhogIdle;
@@ -347,6 +263,89 @@ void draw() {
       }
     }
 
+    // CAREFUL!
+    // Because of how this translate value is calculated, the Y value of the ground level is actually 0
+    pushMatrix();
+    translate(0, max(SOIL_SIZE * -18, SOIL_SIZE * 1 - playerY));
+
+    // Ground
+
+    fill(124, 204, 25);
+    noStroke();
+    rect(0, -GRASS_HEIGHT, width, GRASS_HEIGHT);
+
+    // Soil
+
+    for (int i = 0; i < soilHealth.length; i++) {
+      for (int j = 0; j < soilHealth[i].length; j++) {
+
+        // Change this part to show soil and stone images based on soilHealth value
+        // NOTE: To avoid errors on webpage, you can either use floor(j / 4) or (int)(j / 4) to make sure it's an integer.
+        if (soilHealth[i][j]!=0) {
+          int areaIndex = floor(j / 4);
+          int soilIndex = 4;
+          if (soilHealth[i][j]>=13) {
+            soilIndex = 4;
+          } else if (soilHealth[i][j]>=10) {
+            soilIndex = 3;
+          } else if (soilHealth[i][j]>=7) {
+            soilIndex = 2;
+          } else if (soilHealth[i][j]>=4) {
+            soilIndex = 1;
+          } else if (soilHealth[i][j]>=1) {
+            soilIndex = 0;
+          }
+          image(soils[areaIndex][soilIndex], i * SOIL_SIZE, j * SOIL_SIZE);
+
+          // Stone
+          if (soilHealth[i][j]>=43) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+            image(stones[1][4], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=40) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+            image(stones[1][3], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=37) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+            image(stones[1][2], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=34) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+            image(stones[1][1], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=31) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+            image(stones[1][0], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=28) {
+            image(stones[0][4], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=25) {
+            image(stones[0][3], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=22) {
+            image(stones[0][2], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=19) {
+            image(stones[0][1], i * SOIL_SIZE, j * SOIL_SIZE);
+          } else if (soilHealth[i][j]>=16) {
+            image(stones[0][0], i * SOIL_SIZE, j * SOIL_SIZE);
+          }
+        } else {
+          image(soilEmpty, i * SOIL_SIZE, j * SOIL_SIZE);
+        }
+      }
+    }
+
+    // Cabbages
+    // > Remember to check if playerHealth is smaller than PLAYER_MAX_HEALTH!
+    
+    for(int i=0;i<6;i++){
+      if(playerX < cabbageX[i]+SOIL_SIZE &&
+           playerX + SOIL_SIZE > cabbageX[i] &&
+           playerY < cabbageY[i] + SOIL_SIZE &&
+           playerY + SOIL_SIZE > cabbageY[i] &&
+           playerHealth <=4
+           ){
+          cabbageX[i] = -SOIL_SIZE;
+          playerHealth ++;
+        }
+      image(cabbage,cabbageX[i],cabbageY[i]);
+    }
+    // Groundhog display
     image(groundhogDisplay, playerX, playerY);
 
     // Soldiers
