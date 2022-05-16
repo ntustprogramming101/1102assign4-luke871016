@@ -153,8 +153,25 @@ void draw() {
         soilLeftIsEmpty = true;
         soilRightIsEmpty = true;
       }
+      if (soilBelowIsEmpty) {
 
-      if (leftState) {
+        groundhogDisplay = groundhogDown;
+
+        // Check bottom boundary
+
+        // HINT:
+        // We have already checked "player is NOT at the bottom AND the soil under the player is empty",
+        // and since we can only get here when the above statement is false,
+        // we only have to check again if "player is NOT at the bottom" to make sure there won't be out-of-bound exception
+        if (playerRow < SOIL_ROW_COUNT - 1) {
+          // > If so, dig it and decrease its health
+          // For requirement #3:
+          // Note that player never needs to move down as it will always fall automatically,
+          // so the following 2 lines can be removed once you finish requirement #3
+          playerMoveDirection = DOWN;
+          playerMoveTimer = playerMoveDuration;
+        }
+      } else if (leftState) {
         groundhogDisplay = groundhogLeft;
         // Check left boundary
         if (playerCol > 0) {
@@ -201,24 +218,6 @@ void draw() {
           soilHealth[playerCol][playerRow+1] -= 1;
         }
       
-      }else if (soilBelowIsEmpty) {
-
-        groundhogDisplay = groundhogDown;
-
-        // Check bottom boundary
-
-        // HINT:
-        // We have already checked "player is NOT at the bottom AND the soil under the player is empty",
-        // and since we can only get here when the above statement is false,
-        // we only have to check again if "player is NOT at the bottom" to make sure there won't be out-of-bound exception
-        if (playerRow < SOIL_ROW_COUNT - 1) {
-          // > If so, dig it and decrease its health
-          // For requirement #3:
-          // Note that player never needs to move down as it will always fall automatically,
-          // so the following 2 lines can be removed once you finish requirement #3
-          playerMoveDirection = DOWN;
-          playerMoveTimer = playerMoveDuration;
-        }
       }
     }
 
@@ -507,8 +506,8 @@ void initialize() {
   for (int o=1; o<24; o++) {
     float randomSeed = random(0, 2);
     if (floor(randomSeed)==0) {
-      int emptyA = floor(random(0, 9));
-      int emptyB = floor(random(0, 9));
+      int emptyA = floor(random(0, 8));
+      int emptyB = floor(random(0, 8));
       for (int i=0; i<8; i++) {
         if (i == emptyA) {
           soilHealth[i][o] = 0;
@@ -518,7 +517,7 @@ void initialize() {
         }
       }
     } else {
-      int emptyA = floor(random(0, 9));
+      int emptyA = floor(random(0, 8));
       for (int i=0; i<8; i++) {
         if (i == emptyA) {
           soilHealth[i][o] = 0;
